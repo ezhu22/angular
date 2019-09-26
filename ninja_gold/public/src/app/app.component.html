@@ -1,0 +1,45 @@
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<h1>{{ title }} app is running!</h1>
+
+<table class='table text-center'>
+  <thead>
+    <tr>
+        <th>Name</th>
+        <th>Gold</th>
+        <th>Play</th>
+    </tr>
+  </thead>
+  
+  <tr *ngFor='let ninja of ninjas'>
+    <th>{{ninja.name}}</th>
+    <th>{{ninja.gold}}</th>
+    <th><button (click)='showNinjaFromService( ninja._id.toString())'>Play</button></th>
+  </tr>
+</table>
+
+<div *ngFor='let playingNinja of oneNinja'>
+  <h3>Current Playing Ninja: {{ playingNinja.name }} | Current Gold: {{this.updated_gold }}</h3>
+  <div *ngIf='this.updated_gold < 0'>
+    <h1>GAME OVER, your ninja has been deleted.</h1>
+    <a class='btn btn-primary' href='/'>Reset</a>
+  </div>
+  <table  class='table text-center'>
+    <thead>
+      <tr>
+        <th>Farm</th>
+        <th>Cave</th>
+        <th>House</th>
+        <th>Casino</th>
+      </tr>
+    </thead>
+    <tr>
+      <th><button (click)='calculateGold("farm", playingNinja._id.toString(), playingNinja.gold)'>1 to 5 Gold</button></th>
+      <th><button (click)='calculateGold("cave", playingNinja._id.toString(), playingNinja.gold)'>0 to 10 Gold</button></th>
+      <th><button (click)='calculateGold("house", playingNinja._id.toString(), playingNinja.gold)'>-10 to 20 Gold</button></th>
+      <th><button (click)='calculateGold("casino", playingNinja._id.toString(), playingNinja.gold)'>-100 to 100 Gold</button></th>
+    </tr>
+  </table>
+  <button (click)='saveNinja(playingNinja._id.toString(), this.updated_gold)'>Save</button>
+</div>
