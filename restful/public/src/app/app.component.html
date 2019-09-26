@@ -1,5 +1,15 @@
 <h1>{{ title }} app is running!</h1>
 
 
+<button (click)="getTasksFromService()">Get Tasks!</button>
+
 <h3>All the Tasks:</h3>
-<p *ngFor='let task of tasks'> {{ task.title }} - {{ task.description }} </p>
+<div *ngFor='let task of tasks'> 
+  <p>Title: {{ task.title }}</p> 
+  <button (click)='showTaskFromService($event, task._id.toString())'>Show</button>
+  <div *ngFor='let info of oneTask'>
+    <p *ngIf='task._id.includes(info._id)'>Description: {{ info.description }}</p>
+  </div>
+</div>
+
+
