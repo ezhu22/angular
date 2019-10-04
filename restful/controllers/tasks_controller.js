@@ -17,7 +17,7 @@ module.exports = {
         new_task.save()
             .then(success => {
                 console.log('Task created: ', success)
-                res.redirect('/');
+                res.json(success);
             })
             .catch(err => {
                 console.log('Unable to create task.')
@@ -47,7 +47,7 @@ module.exports = {
                 response.save()
                     .then(success =>{
                         console.log('Task updated successfully', success)
-                        res.redirect('/')
+                        res.json(success)
                     })
                     .catch(err => {
                         console.log('Unable to save edits.')
@@ -65,7 +65,7 @@ module.exports = {
         Task.deleteOne({ _id: req.params.id })
             .then(removed => {
                 console.log('Task removed from db.', removed)
-                res.redirect('/')
+                res.json(removed)
             })
             .catch(err =>{
                 console.log('Unable to delete task.')

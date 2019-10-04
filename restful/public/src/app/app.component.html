@@ -1,15 +1,60 @@
-<h1>{{ title }} app is running!</h1>
+<head>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <h1>{{ title }} app is running!</h1>
 
-
-<button (click)="getTasksFromService()">Get Tasks!</button>
-
-<h3>All the Tasks:</h3>
-<div *ngFor='let task of tasks'> 
-  <p>Title: {{ task.title }}</p> 
-  <button (click)='showTaskFromService($event, task._id.toString())'>Show</button>
-  <div *ngFor='let info of oneTask'>
-    <p *ngIf='task._id.includes(info._id)'>Description: {{ info.description }}</p>
-  </div>
-</div>
-
-
+    <div class='row justify-content-between'>
+        <div class='col-4'>
+            <h3>All the Tasks:</h3>
+            <div class='border border-dark text-center' *ngFor='let task of tasks'> 
+              <p>Title: {{ task.title }}</p> 
+              <div *ngFor='let info of oneTask'>
+                  <p *ngIf='task._id.includes(info._id)'>Description: {{ info.description }}</p>
+              </div>
+              <button class='btn-sm btn-primary'(click)='showTaskFromService(task._id.toString())'>Show</button>
+              <button class='btn-sm btn-success'(click)='updateTaskFromService(task._id.toString())'>Edit</button>
+              <button class='btn-sm btn-danger' (click)='deleteTaskFromService(task._id.toString())'>Delete</button>
+            </div>
+        </div>
+        <div class='col-6'>
+            <form (submit)="onSubmit()">
+              <h3>New Task Here:</h3>
+              <table class='text-center'>
+                <tr>
+                  <th>Title:</th>
+                  <th><input type="text" name="title" [(ngModel)]="newTask.title" /></th>
+                </tr>
+                <tr>
+                  <th>Description:</th>
+                  <th><input type="text" name="description" [(ngModel)]="newTask.description" /></th>
+                </tr>
+                <tr>
+                  <th colspan='2'><input class='btn-sm btn-primary' type="submit" value="Create Task" ></th>
+                </tr>
+                </table>
+              </form>
+                  
+              
+              <div *ngIf='updateTask.status == true'>
+                <form (submit) = "onUpdate()">
+                  <input type='hidden' name = 'id' [(ngModel)] = 'updateTask.id'/>
+                  <h3>Update Task Here:</h3>
+                  <table class='text-center'>
+                    <tr>
+                      <th>Title:</th>
+                      <th><input type="text" name="title" [(ngModel)]="updateTask.title" /></th>
+                    </tr>
+                    <tr>
+                      <th>Description:</th>
+                      <th><input type="text" name="description" [(ngModel)]="updateTask.description" /></th>
+                    </tr>
+                    <tr>
+                      <th colspan='2'><input class='btn-sm btn-primary' type="submit" value="Update Task" /></th>
+                    </tr>
+                  </table>
+                </form>
+              </div>
+        </div>
+    </div>
+</body>
